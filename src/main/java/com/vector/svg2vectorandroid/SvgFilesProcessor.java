@@ -106,13 +106,16 @@ public class SvgFilesProcessor {
     }
 	
 	private File getFileWithXMlExtension(Path target, String extension, String extensionSuffix){
-		String svgFilePath =  target.toFile().getAbsolutePath();
 		StringBuilder svgBaseFile = new StringBuilder();
-		int index = svgFilePath.lastIndexOf(".");
+		String s = target.getFileName().toString().replace('-', '_');
+		Path path = Paths.get(target.getParent().toAbsolutePath().toString(), "ic" + s.substring(3));
+		String svgFileName = path.toString();
+		int index = svgFileName.lastIndexOf(".");
 		if(index != -1){
-			String subStr = svgFilePath.substring(0, index);
+			String subStr = svgFileName.substring(0, index);
 			svgBaseFile.append(subStr);
 		}
+		svgBaseFile.append("_40dp");
 		svgBaseFile.append(null != extensionSuffix ? extensionSuffix : "");
 		svgBaseFile.append(".");
 		svgBaseFile.append(extension);
